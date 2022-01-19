@@ -1,10 +1,12 @@
 require("dotenv").config();  // ENABLES ENV VARIABLES
 require("express-async-errors"); // ERROR WRAPPER
+const path = require('path');
 
 const connetDB = require("./database/connect") // FUNCTION TO CONNECT TO DATABASE
 const notFound = require("./middleware/notFound"); // FOR NOT EXISTING ROUTS
 const errorHandler = require("./middleware/errorHandler"); //HANDLES ALL ERRORS
 const userRouter = require("./routers/user"); // ROUTS FOR USER INTERACTION
+const auth = require("./middleware/authentication")
 
 const express = require('express'); 
 const app = express(); //CREATES SERVER
@@ -33,12 +35,19 @@ app.use(express.static("public")) //USE ASSETS FROM PUBLIC FOLDER - FRONT END
 
 app.use("/api/users", userRouter); // USES ROUTS FOR USER INTERACTION
 
+app.post("/auth", auth, (req, res) => {
+	res.json({ok: true})
+})
+
 /********** REDIRECTION TO EXACT PAGE **********/
 app.get("/login", (req, res) => {
 	res.redirect("/login.html");
 })
 app.get("/register", (req, res) => {
 	res.redirect("/register.html");
+})
+app.get("/home", (req, res) => {
+	res.redirect("/home.html");
 })
 
 app.use(notFound);

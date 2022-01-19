@@ -6,6 +6,15 @@ const registerElement = document.querySelector("#register")
 
 /********** EVENTS **********/
 registerElement.addEventListener("click", register);
+emailElement.addEventListener("keyup", (event) => {
+	if (event.keyCode === 13) register();
+})
+passwordElement.addEventListener("keyup", (event) => {
+	if (event.keyCode === 13) register();
+})
+confirmElement.addEventListener("keyup", (event) => {
+	if (event.keyCode === 13) register();
+})
 
 /**********  **********/
 async function register() {
@@ -60,7 +69,7 @@ async function register() {
 		/********** SETTING USER INFO IN LOCALSTORAGE **********/
 		localStorage.setItem("token", data.token);
 		localStorage.setItem("user", JSON.stringify(data.user));
-		window.location.href = "/";
+		window.location.href = "/home";
 	} catch (error) {
 		console.error(error);
 		alert(error.message);
