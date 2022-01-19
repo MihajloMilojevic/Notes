@@ -43,7 +43,7 @@ async function register() {
 
 	const method = "POST";
 	const headers = {"Content-Type": "application/json"};
-	const body = {email, password};
+	const body = JSON.stringify({email, password});
 	const config = {method, headers, body};
 
 	/********** API CALL **********/
@@ -54,12 +54,12 @@ async function register() {
 		if(!data.ok)
 		{
 			console.error(data.error);
-			alert(data.error.message);
+			alert(data.message);
 			return;
 		}
 		localStorage.setItem("token", data.token);
 		localStorage.setItem("user", JSON.stringify(data.user));
-		window.open("/")
+		window.location.href = "/";
 	} catch (error) {
 		console.error(error);
 		alert(error.message);
