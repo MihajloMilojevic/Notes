@@ -1,7 +1,10 @@
 
 async function checker() {
 	const token = localStorage.getItem("token");
-	const headers = {Authorization: `Bearer ${token}`};
+	const headers = {
+		"Authorization": `Bearer ${token}`,
+		"Content-Type": "application/json"
+	};
 	const method = "POST";
 	const config = {method, headers};
 	
@@ -9,8 +12,9 @@ async function checker() {
 
 	try {
 		const response = await fetch(URL, config);
-		const data = response.json();
-		if(!data.ok) throw new Error("");
+		const data = await response.json();
+		if(!data.ok) 
+			window.location.href = "/";
 	} catch (error) {
 		window.location.href = "/";
 	}

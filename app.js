@@ -6,7 +6,8 @@ const connetDB = require("./database/connect") // FUNCTION TO CONNECT TO DATABAS
 const notFound = require("./middleware/notFound"); // FOR NOT EXISTING ROUTS
 const errorHandler = require("./middleware/errorHandler"); //HANDLES ALL ERRORS
 const userRouter = require("./routers/user"); // ROUTS FOR USER INTERACTION
-const auth = require("./middleware/authentication")
+const notesRouter = require("./routers/notes"); // ROUTS FOR NOTES MANIPULATION
+const auth = require("./middleware/authentication") // AUTHENTICATION MIDDLEWARE
 
 const express = require('express'); 
 const app = express(); //CREATES SERVER
@@ -34,6 +35,7 @@ app.use(xss()); // SECURITY
 app.use(express.static("public")) //USE ASSETS FROM PUBLIC FOLDER - FRONT END
 
 app.use("/api/users", userRouter); // USES ROUTS FOR USER INTERACTION
+app.use("/api/notes", notesRouter); // USES ROUTS FOR MANIPULATION OF NOTES
 
 app.post("/auth", auth, (req, res) => {
 	res.json({ok: true})
