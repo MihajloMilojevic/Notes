@@ -57,6 +57,7 @@ async function register() {
 			alert(data.message);
 			return;
 		}
+		/********** SETTING USER INFO IN LOCALSTORAGE **********/
 		localStorage.setItem("token", data.token);
 		localStorage.setItem("user", JSON.stringify(data.user));
 		window.location.href = "/";
