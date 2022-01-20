@@ -1,6 +1,7 @@
 
 async function checker() {
 	const token = localStorage.getItem("token");
+	if(!token) return window.location.href = "/";
 	const headers = {
 		"Authorization": `Bearer ${token}`,
 		"Content-Type": "application/json"
