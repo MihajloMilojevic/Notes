@@ -1,21 +1,31 @@
-const token = localStorage.getItem("token");
-
 const title = document.querySelector("#title");
 const text = document.querySelector("#text");
 const list = document.querySelector("#list");
 const button = document.querySelector("#add")
+const logout = document.querySelector("#logout")
 
 button.onclick = add;
 text.addEventListener("keyup", function(event) {
 	if (event.keyCode === 13) add();
 });
 
+logout.addEventListener("click", async () => {
+	const URL = "http://localhost:3000/api/users/logout";
+	try {
+		const response = await fetch(URL);
+		const data = await response.json();
+		if(data.ok)
+			location.href = "/";
+	} catch (error) {
+		console.error(error);
+	}
+})
+
 getAll();
 
 async function getAll(){
 	
 	const headers = {
-		"Authorization": `Bearer ${token}`,
 		"Content-Type": "application/json"
 	};
 	const method = "GET";
@@ -44,7 +54,6 @@ async function add() {
 	const newText = text.value;
 	if(!newText || !newTitle) return;
 	const headers = {
-		"Authorization": `Bearer ${token}`,
 		"Content-Type": "application/json"
 	};
 	const body = JSON.stringify({

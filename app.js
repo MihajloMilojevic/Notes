@@ -1,6 +1,7 @@
 require("dotenv").config();  // ENABLES ENV VARIABLES
 require("express-async-errors"); // ERROR WRAPPER
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const connetDB = require("./database/connect") // FUNCTION TO CONNECT TO DATABASE
 const notFound = require("./middleware/notFound"); // FOR NOT EXISTING ROUTS
@@ -8,6 +9,7 @@ const errorHandler = require("./middleware/errorHandler"); //HANDLES ALL ERRORS
 const userRouter = require("./routers/user"); // ROUTS FOR USER INTERACTION
 const notesRouter = require("./routers/notes"); // ROUTS FOR NOTES MANIPULATION
 const auth = require("./middleware/authentication") // AUTHENTICATION MIDDLEWARE
+const protect = require("./middleware/protect");
 
 const express = require('express'); 
 const app = express(); //CREATES SERVER
@@ -23,7 +25,7 @@ app.set('trust proxy', 1);
 app.use(
   rateLimiter({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    max: 500, // limit each IP to 100 requests per windowMs
   })
 );
 
@@ -31,7 +33,7 @@ app.use(express.json()); // CONVERTS REQUEST BODY TO JS OBJECT AND ADDS IT TO RE
 app.use(helmet()); // SECURITY
 app.use(cors()); // SECURITY
 app.use(xss()); // SECURITY
-
+app.use(cookieParser());
 app.use(express.static("public")) //USE ASSETS FROM PUBLIC FOLDER - FRONT END
 
 app.use("/api/users", userRouter); // USES ROUTS FOR USER INTERACTION
@@ -51,6 +53,9 @@ app.get("/register", (req, res) => {
 app.get("/home", (req, res) => {
 	res.redirect("/home.html");
 })
+
+app.use(protect, express.static("./private"));
+
 
 app.use(notFound);
 app.use(errorHandler);

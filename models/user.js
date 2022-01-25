@@ -13,10 +13,14 @@ const userSchema = new mongoose.Schema({
         ],
       unique: true,
 	},
-    password: {
-        type: String,
-        required: [true, "Password is required"],
-    }
+  password: {
+      type: String,
+      required: [true, "Password is required"],
+  },
+  image: {
+    type: String,
+    default: "/uploads/default.png"
+  }
 })
 
 /********** HASHES ALL PASSWORDS BEFORE SAVING IT TO DB **********/

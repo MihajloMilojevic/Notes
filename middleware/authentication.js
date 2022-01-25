@@ -3,13 +3,10 @@ const jwt = require('jsonwebtoken')
 const { UnauthenticatedError } = require('../errors')
 
 const auth = async (req, res, next) => {
-  // check header
-  const authHeader = req.headers.authorization
-  if (!authHeader || !authHeader.startsWith('Bearer ')) { // HEADER MUST START WITH Bearer AND MUST HAVE A SPACE
+  const token = req.cookies.token;
+  
+  if(!token)
     throw new UnauthenticatedError('Authentication error')
-  }
-  const token = authHeader.split(' ')[1] // TOKEN FROM A HEADER (Bearer <token> => ["Bearer", "<token>"])
-
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET) // VERIFY TOKEN
     req.user = { userId: payload.userId, email: payload.email }
