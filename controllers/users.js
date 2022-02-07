@@ -3,6 +3,17 @@ const StatusCodes = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError, NotFoundError } = require('../errors');
 const attachCookies = require("../utils/setCookies");
 
+const showMe = async(req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+  if (!user) {
+    throw new UnauthenticatedError('Please login');
+  }
+  
+  /********** PASSWORDS MUST MATCH **********/
+  attachCookies(res, user);
+  res.status(StatusCodes.OK).json({ ok: true, user: { username: user.username,email: user.email, _id: user["_id"],  } })
+}
+
 const login = async (req, res) => {
 	const { email, password } = req.body;
   
@@ -59,5 +70,6 @@ module.exports = {
   register,
   login,
   deleteUser,
-  logout
+  logout,
+  showMe
 }

@@ -33,7 +33,7 @@ async function login()
 	if(!valid) return;
 
 	/********** FETCH CONFIG **********/
-	const URL="http://localhost:3000/api/users/login"
+	const URL="/api/users/login"
 
 	const method = "POST";
 	const headers = {"Content-Type": "application/json"};

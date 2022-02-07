@@ -60,7 +60,7 @@ app.use(protect, express.static("./private"));
 app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 
 const startapp = async () => { // CONNECTS TO DATABASE AND STARTS SERVER ONLY IF SUCCESFULL

@@ -10,7 +10,7 @@ text.addEventListener("keyup", function(event) {
 });
 
 logout.addEventListener("click", async () => {
-	const URL = "http://localhost:3000/api/users/logout";
+	const URL = "/api/users/logout";
 	try {
 		const response = await fetch(URL);
 		const data = await response.json();
@@ -31,7 +31,7 @@ async function getAll(){
 	const method = "GET";
 	const config = {method, headers};
 
-	const URL = "http://localhost:3000/api/notes";
+	const URL = "/api/notes";
 
 	try {
 		const response = await fetch(URL, config);
@@ -63,7 +63,7 @@ async function add() {
 	const method = "POST";
 	const config = {method, headers, body};
 
-	const URL = "http://localhost:3000/api/notes";
+	const URL = "/api/notes";
 
 	try {
 		const response = await fetch(URL, config);

@@ -48,7 +48,7 @@ async function register() {
 	if(!valid) return;
 
 	/********** FETCH CONFIG **********/
-	const URL="http://localhost:3000/api/users/register"
+	const URL="/api/users/register"
 
 	const method = "POST";
 	const headers = {"Content-Type": "application/json"};
