@@ -36,6 +36,10 @@ app.use(xss()); // SECURITY
 app.use(cookieParser());
 app.use(express.static("public")) //USE ASSETS FROM PUBLIC FOLDER - FRONT END
 
+app.use((req, res, next) => {
+	console.log(req.url);
+	next();
+})
 app.use("/api/users", userRouter); // USES ROUTS FOR USER INTERACTION
 app.use("/api/notes", notesRouter); // USES ROUTS FOR MANIPULATION OF NOTES
 

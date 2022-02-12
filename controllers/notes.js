@@ -1,7 +1,6 @@
 const Note = require("../models/note")
 const StatusCodes = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError, NotFoundError } = require('../errors');
-const res = require("express/lib/response");
 
 const createNote = async (req, res) => {
 	const {title, text} = req.body;
@@ -14,6 +13,13 @@ const allNotes = async (req, res) => {
 	const author = req.user.userId;
 	const notes = await Note.find({author}).sort("-updatedAt");
 	res.status(StatusCodes.OK).json({ok: true, notes}) 
+}
+
+const getSingleNote = async (req, res) => {
+	const note = await Note.findOne({_id: req.params.id});
+	if(!note)
+		throw new NotFoundError("No note with that id");
+	res.status(StatusCodes.OK).json({ ok: true, note });
 }
 
 const editNote = async (req, res) => {
@@ -34,5 +40,6 @@ module.exports = {
 	createNote,
 	allNotes,
 	editNote,
-	deleteNote
+	deleteNote,
+	getSingleNote
 }
