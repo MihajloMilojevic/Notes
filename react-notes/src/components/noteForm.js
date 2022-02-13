@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { useFetch } from "../utils";
 
-function NoteForm({note, onSaveUrl, onSaveMethod}) {
+function NoteForm({note, onSaveUrl, onSaveMethod, deleteNote}) {
 	const navigate = useNavigate();
 	const [url, setUrl] = useState("");
 	const [options, setOptions] = useState({
@@ -33,6 +33,22 @@ function NoteForm({note, onSaveUrl, onSaveMethod}) {
 		setBody({...body, [e.target.name]: e.target.value});
 	}
 
+	const handleDelete = async () => {
+		try {
+			const response = await fetch(`/api/notes/${note._id}`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json"
+				} 
+			})
+			const data = await response.json();
+			if(data.ok) 
+				navigate("/home");
+		} catch (error) {
+			
+		}
+	}
+
 	return (
 		<form onSubmit={onSave}>
 			<label>Title: </label> <br/>
@@ -52,6 +68,7 @@ function NoteForm({note, onSaveUrl, onSaveMethod}) {
 			></textarea> <br/>
 			<button type="submit">Save</button>
 			<button onClick={handleCancel}>Cancel</button>
+			{deleteNote && <button onClick={handleDelete}>Delete</button>}
 		</form>
 	);
 }

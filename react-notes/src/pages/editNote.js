@@ -26,7 +26,7 @@ function Note() {
 	if(isLoading)
 		return (<h1>Loading...</h1>)
 	return (
-		<NoteForm note={note} onSaveUrl={`/api/notes/${id}`} onSaveMethod="PATCH"/>
+		<NoteForm note={note} onSaveUrl={`/api/notes/${id}`} onSaveMethod="PATCH" deleteNote={true}/>
 	);
 }
 

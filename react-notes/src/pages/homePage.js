@@ -24,12 +24,34 @@ function HomePage(){
 			setNotes(notesFetched.notes);
 	}, [notesFetched])
 	
+	const logout = async () => {
+		try {
+			const response = await fetch("/api/users/logout");
+			const data = await response.json();
+			if(data.ok)
+				navigate("/login");
+		} catch (error) {
+			
+		}
+	}
+
+	const createNote = () => {
+		navigate("/note/create")
+	}
+
 	if(isLoading)
 	 	return <h1>Loading...</h1>
 	return (
 		<>
 			<h1>home page</h1>
-			<NotesList notes={notes} />
+			<button onClick={logout}>LOGOUT</button> <br/>
+			<button onClick={createNote}>Create</button> <br/>
+			{
+				notes.length > 0 ?
+				<NotesList notes={notes} />
+				:
+				<h3>No notes yet</h3>
+			}
 		</>
 	);
 }
