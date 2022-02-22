@@ -9,7 +9,9 @@ const errorHandler = require("./middleware/errorHandler"); //HANDLES ALL ERRORS
 const userRouter = require("./routers/user"); // ROUTS FOR USER INTERACTION
 const notesRouter = require("./routers/notes"); // ROUTS FOR NOTES MANIPULATION
 const auth = require("./middleware/authentication") // AUTHENTICATION MIDDLEWARE
-const protect = require("./middleware/protect");
+
+/* NOT NEEDED WITH REACT */
+//const protect = require("./middleware/protect");
 
 const express = require('express'); 
 const app = express(); //CREATES SERVER
@@ -46,9 +48,9 @@ app.use("/api/notes", notesRouter); // USES ROUTS FOR MANIPULATION OF NOTES
 app.post("/auth", auth, (req, res) => {
 	res.json({ok: true})
 })
-
+/* NOT NEEDED WITH REACT */
 /********** REDIRECTION TO EXACT PAGE **********/
-app.get("/login", (req, res) => {
+/*app.get("/login", (req, res) => {
 	res.redirect("/login.html");
 })
 app.get("/register", (req, res) => {
@@ -56,9 +58,10 @@ app.get("/register", (req, res) => {
 })
 app.get("/home", (req, res) => {
 	res.redirect("/home.html");
-})
+})*/
 
-app.use(protect, express.static("./private"));
+/* NOT NEEDED WITH REACT */
+/*app.use(protect, express.static("./private"));*/
 
 
 app.use(notFound);
